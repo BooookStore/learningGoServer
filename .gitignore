@@ -1,0 +1,24 @@
+# library
+/vendor/
+
+# Idea
+/.idea/
+
+# other
+.DS_store
+
+# vue
+/assets/
+/vue/.ds_store
+/vue/node_modules/
+/vue/dist/
+/vue/npm-debug.log*
+/vue/test/unit/coverage/
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
