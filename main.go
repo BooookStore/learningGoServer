@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/BooookStore/echovue/controller"
-	"github.com/BooookStore/echovue/model"
+	"github.com/BooookStore/learningGoServer/controller"
+	"github.com/BooookStore/learningGoServer/model"
 	"github.com/labstack/echo"
 )
 

@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"github.com/BooookStore/echovue/model"
+	"github.com/BooookStore/learningGoServer/model"
 	"github.com/labstack/echo"
 	"net/http"
 	"strconv"
