@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"github.com/BooookStore/learningGoServer/model"
+	"github.com/BooookStore/echovue/model"
 	"github.com/labstack/echo"
 	"net/http"
 	"strconv"
@@ -12,17 +12,18 @@ type Handler struct {
 	UserData []*model.User
 }
 
+// ErrorJSON is error type caused json.
 type ErrorJSON struct {
 	Message string `json:"message"`
 }
 
 // GetUser return json data for user.
-func (h *Handler) RetrieveUsers(c echo.Context) error {
+func (h *Handler) getUsers(c echo.Context) error {
 	return c.JSON(http.StatusOK, h.UserData)
 }
 
 // GetOneUser return json data for one user by user id.
-func (h *Handler) RetrieveUser(c echo.Context) error {
+func (h *Handler) getUser(c echo.Context) error {
 	idstr := c.Param("id")
 	idint, err := strconv.Atoi(idstr)
 
@@ -30,7 +31,7 @@ func (h *Handler) RetrieveUser(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, ErrorJSON{Message: "Bad Request user id " + idstr})
 	}
 
-	// retrive user by id
+	// retrieve user by id
 	for _, user := range h.UserData {
 		if user.ID == idint {
 			return c.JSON(http.StatusOK, user)

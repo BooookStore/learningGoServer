@@ -2,7 +2,7 @@ package controller
 
 import (
 	"encoding/json"
-	"github.com/BooookStore/learningGoServer/model"
+	"github.com/BooookStore/echovue/model"
 	"github.com/labstack/echo"
 	"github.com/stretchr/testify/assert"
 	"net/http"
@@ -30,7 +30,7 @@ func TestRetrieveUsers(t *testing.T) {
 	h := Handler{mockdb}
 
 	// Verify
-	if assert.NoError(t, h.RetrieveUsers(c)) {
+	if assert.NoError(t, h.getUsers(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
 
 		// JSON Response check.
@@ -60,7 +60,7 @@ func TestRetrieveOneUserById1(t *testing.T) {
 	h := Handler{mockdb}
 
 	// Verify
-	if assert.NoError(t, h.RetrieveUser(c)) {
+	if assert.NoError(t, h.getUser(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
 
 		// JSON Response check.
@@ -86,7 +86,7 @@ func TestRetrieveOneUserById2(t *testing.T) {
 	h := Handler{mockdb}
 
 	// Verify
-	if assert.NoError(t, h.RetrieveUser(c)) {
+	if assert.NoError(t, h.getUser(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
 
 		// JSON Response check.
