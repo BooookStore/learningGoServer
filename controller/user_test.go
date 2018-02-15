@@ -130,6 +130,19 @@ func TestCreateUser(t *testing.T) {
 
 }
 
-func TestRemoveUser(t *testing.T) {
+func TestDeleteUser(t *testing.T) {
+	// Setup Server
+	e := echo.New()
+	req := httptest.NewRequest(echo.DELETE, "/", nil)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+	c.SetParamNames("id")
+	c.SetParamValues("2")
 
+	h := Handler{mockdb}
+
+	if assert.NoError(t, h.DeleteUser(c)) {
+		assert.Equal(t, http.StatusNoContent, rec.Code)
+		assert.Equal(t, 2, len(h.UserData))
+	}
 }

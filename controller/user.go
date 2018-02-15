@@ -50,3 +50,23 @@ func (h *Handler) CreateUser(c echo.Context) error {
 	h.UserData = append(h.UserData, u)
 	return c.JSON(http.StatusCreated, u)
 }
+
+// DeleteUser delete user.
+func (h *Handler) DeleteUser(c echo.Context) error {
+	id, err := strconv.Atoi(c.Param("id"))
+
+	if err != nil {
+		return c.JSON(http.StatusNotFound, ErrorJSON{Message: "Bad Request user id " + c.Param("id")})
+	}
+
+	var index int
+	for ; index < len(h.UserData); index++ {
+		if h.UserData[index].ID == id {
+			break
+		}
+	}
+
+	h.UserData = append(h.UserData[:index], h.UserData[index+1:]...)
+
+	return c.NoContent(http.StatusNoContent)
+}
