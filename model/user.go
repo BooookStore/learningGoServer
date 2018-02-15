@@ -3,7 +3,7 @@ package model
 
 type (
 	User struct {
-		ID int `json:"id"`
+		ID   int    `json:"id"`
 		Name string `json:"Name"`
 		Age  int    `json:"Age"`
 	}
@@ -13,4 +13,6 @@ type (
 		AddressNumber string
 		Address       string
 	}
+
+	UserList []User
 )
