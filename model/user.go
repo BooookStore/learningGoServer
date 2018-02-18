@@ -13,16 +13,10 @@ type (
 		Age  int    `json:"Age"`
 	}
 
-	Company struct {
-		Name          string
-		AddressNumber string
-		Address       string
-	}
-
 	UserList []User
 )
 
-// DeleteById delete user by specified user id.
+// DeleteById delete user by user id.
 func (u *UserList) DeleteById(id int) error {
 	var (
 		dti     = 0
