@@ -1,6 +1,11 @@
 // Define model type.
 package model
 
+import (
+	"errors"
+	"strconv"
+)
+
 type (
 	User struct {
 		ID   int    `json:"id"`
@@ -17,20 +22,25 @@ type (
 	UserList []User
 )
 
-func (u UserList) DeleteById(id int) {
-	var index int
-	//for ; index < len(u); index++ {
-	//	if *u.ID == id {
-	//		break
-	//	}
-	//}
+// DeleteById delete user by specified user id.
+func (u *UserList) DeleteById(id int) error {
+	var (
+		dti     = 0
+		isFound = false
+	)
 
-	for _, user := range u {
+	for _, user := range *u {
 		if user.ID == id {
+			isFound = true
 			break
 		}
-		index++
+		dti++
 	}
 
-	h.UserData = append(h.UserData[:index], h.UserData[index+1:]...)
+	if !isFound {
+		return errors.New("Not found user id " + strconv.Itoa(id))
+	} else {
+		*u = append((*u)[:dti], (*u)[dti+1:]...)
+		return nil
+	}
 }

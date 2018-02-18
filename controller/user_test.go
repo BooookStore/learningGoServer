@@ -2,7 +2,7 @@ package controller
 
 import (
 	"encoding/json"
-	"github.com/BooookStore/echovue/model"
+	"github.com/BooookStore/learningGoServer/model"
 	"github.com/labstack/echo"
 	"github.com/stretchr/testify/assert"
 	"net/http"

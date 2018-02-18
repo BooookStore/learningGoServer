@@ -1,33 +1,24 @@
 package model
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+	"github.com/stretchr/testify/assert"
+	"strconv"
+	"errors"
 )
 
 func TestDeleteUser(t *testing.T) {
-	users := UserList{
-		User{
-			ID:   1,
-			Name: "A",
-			Age:  20,
-		},
-		User{
-			ID:   2,
-			Name: "B",
-			Age:  20,
-		},
-		User{
-			ID:   3,
-			Name: "C",
-			Age:  20,
-		},
-	}
+	// Setup
+	users := UserList{{1, "A", 20,}, {2, "B", 20,}, {3, "C", 20,}, {4, "D", 20,}}
 
+	// Action & Verify
+	users.DeleteById(2)
+	assert.Equal(t, UserList{{1, "A", 20}, {3, "C", 20}, {4, "D", 20,}}, users)
 	users.DeleteById(1)
+	assert.Equal(t, UserList{{3, "C", 20}, {4, "D", 20,}}, users)
 
-	assert.Contains(t, UserList{
-		{2, "B", 20},
-		{3, "C", 20},
-	}, users)
+	// Verify error and error message
+	if assert.Error(t, users.DeleteById(2)) {
+		assert.Equal(t, users.DeleteById(2), errors.New("Not found user id " + strconv.Itoa(2)))
+	}
 }
