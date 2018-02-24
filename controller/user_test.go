@@ -12,13 +12,14 @@ import (
 )
 
 // test data
-var (
-	mockdb = model.UserList{
+func getMockDbData() model.UserList {
+	mockdb := model.UserList{
 		{ID: 1, Name: "bookstore", Age: 24},
 		{ID: 2, Name: "ryosuke", Age: 25},
 		{ID: 3, Name: "yuki", Age: 26},
 	}
-)
+	return mockdb
+}
 
 func TestRetrieveUsers(t *testing.T) {
 	// Setup
@@ -27,7 +28,7 @@ func TestRetrieveUsers(t *testing.T) {
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
-	h := Handler{mockdb}
+	h := Handler{getMockDbData()}
 
 	// Verify
 	if assert.NoError(t, h.GetAllUser(c)) {
@@ -57,7 +58,7 @@ func TestRetrieveOneUserById1(t *testing.T) {
 	c.SetParamNames("id")
 	c.SetParamValues("1")
 
-	h := Handler{mockdb}
+	h := Handler{getMockDbData()}
 
 	// Verify
 	if assert.NoError(t, h.GetUser(c)) {
@@ -83,7 +84,7 @@ func TestRetrieveOneUserById2(t *testing.T) {
 	c.SetParamNames("id")
 	c.SetParamValues("2")
 
-	h := Handler{mockdb}
+	h := Handler{getMockDbData()}
 
 	// Verify
 	if assert.NoError(t, h.GetUser(c)) {
@@ -111,7 +112,7 @@ func TestCreateUser(t *testing.T) {
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
-	h := Handler{mockdb}
+	h := Handler{getMockDbData()}
 
 	// Verify
 	if assert.NoError(t, h.CreateUser(c)) {
@@ -139,7 +140,7 @@ func TestDeleteUser(t *testing.T) {
 	c.SetParamNames("id")
 	c.SetParamValues("2")
 
-	h := Handler{mockdb}
+	h := Handler{getMockDbData()}
 
 	if assert.NoError(t, h.DeleteUser(c)) {
 		assert.Equal(t, http.StatusNoContent, rec.Code)
@@ -162,12 +163,11 @@ func TestUpdateUser(t *testing.T) {
 	c.SetParamNames("id")
 	c.SetParamValues("1")
 
-	h := Handler{mockdb}
+	h := Handler{getMockDbData()}
 
 	if assert.NoError(t, h.UpdateUser(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
 		assert.Equal(t, 3, len(h.UserData))
 		assert.Equal(t, model.UserList{{1, "new bookstore", 35}, {2, "ryosuke", 25}, {3, "yuki", 26}}, h.UserData)
-
 	}
 }

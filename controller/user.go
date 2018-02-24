@@ -68,6 +68,7 @@ func (h *Handler) DeleteUser(c echo.Context) error {
 	return c.NoContent(http.StatusNoContent)
 }
 
+// UpdateUser update user by passed json.
 func (h *Handler) UpdateUser(c echo.Context) error {
 	u := new(model.User)
 	if err := c.Bind(u); err != nil {
@@ -79,6 +80,6 @@ func (h *Handler) UpdateUser(c echo.Context) error {
 		return err
 	}
 
-	h.UserData.Update(id, u)
+	h.UserData.Update(id, &model.User{id, u.Name, u.Age})
 	return c.JSON(http.StatusOK, u)
 }

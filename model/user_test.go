@@ -19,7 +19,7 @@ func TestDeleteUser(t *testing.T) {
 
 	// Verify error and error message
 	if assert.Error(t, users.DeleteById(2)) {
-		assert.Equal(t, users.DeleteById(2), errors.New("Not found user id " + strconv.Itoa(2)))
+		assert.Equal(t, users.DeleteById(2), errors.New("Not found user id "+strconv.Itoa(2)))
 	}
 }
 
