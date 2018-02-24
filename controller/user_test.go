@@ -13,7 +13,7 @@ import (
 
 // test data
 var (
-	mockdb = []*model.User{
+	mockdb = model.UserList{
 		{ID: 1, Name: "bookstore", Age: 24},
 		{ID: 2, Name: "ryosuke", Age: 25},
 		{ID: 3, Name: "yuki", Age: 26},
@@ -30,7 +30,7 @@ func TestRetrieveUsers(t *testing.T) {
 	h := Handler{mockdb}
 
 	// Verify
-	if assert.NoError(t, h.getUsers(c)) {
+	if assert.NoError(t, h.GetAllUser(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
 
 		// JSON Response check.
@@ -60,7 +60,7 @@ func TestRetrieveOneUserById1(t *testing.T) {
 	h := Handler{mockdb}
 
 	// Verify
-	if assert.NoError(t, h.getUser(c)) {
+	if assert.NoError(t, h.GetUser(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
 
 		// JSON Response check.
@@ -86,7 +86,7 @@ func TestRetrieveOneUserById2(t *testing.T) {
 	h := Handler{mockdb}
 
 	// Verify
-	if assert.NoError(t, h.getUser(c)) {
+	if assert.NoError(t, h.GetUser(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
 
 		// JSON Response check.
@@ -144,5 +144,30 @@ func TestDeleteUser(t *testing.T) {
 	if assert.NoError(t, h.DeleteUser(c)) {
 		assert.Equal(t, http.StatusNoContent, rec.Code)
 		assert.Equal(t, 2, len(h.UserData))
+		assert.Equal(t, model.UserList{{1, "bookstore", 24}, {3, "yuki", 26}}, h.UserData)
+	}
+}
+
+func TestUpdateUser(t *testing.T) {
+	// Setup update target user
+	deleteTargetUser := model.User{Name: "new bookstore", Age: 35}
+	postJSONBytes, _ := json.Marshal(deleteTargetUser)
+
+	// Setup Server
+	e := echo.New()
+	req := httptest.NewRequest(echo.PUT, "/", strings.NewReader(string(postJSONBytes)))
+	req.Header.Add(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+	c.SetParamNames("id")
+	c.SetParamValues("1")
+
+	h := Handler{mockdb}
+
+	if assert.NoError(t, h.UpdateUser(c)) {
+		assert.Equal(t, http.StatusOK, rec.Code)
+		assert.Equal(t, 3, len(h.UserData))
+		assert.Equal(t, model.UserList{{1, "new bookstore", 35}, {2, "ryosuke", 25}, {3, "yuki", 26}}, h.UserData)
+
 	}
 }

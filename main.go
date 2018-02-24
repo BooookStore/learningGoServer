@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	mockdb = []*model.User{
+	mockdb = model.UserList{
 		{ID: 1, Name: "bookstore", Age: 24},
 		{ID: 2, Name: "ryosuke", Age: 25},
 		{ID: 3, Name: "yuki", Age: 26},
@@ -21,8 +21,11 @@ func main() {
 	)
 
 	// RESTful API
-	e.GET("/users", h.RetrieveUsers)
-	e.GET("/user/:id", h.RetrieveUser)
+	e.GET("/user", h.GetAllUser)
+	e.GET("/user/:id", h.GetUser)
+	e.DELETE("/user/:id", h.DeleteUser)
+	e.POST("/user/", h.CreateUser)
+	e.PUT("/user/:id", h.UpdateUser)
 
 	// Static file
 	e.Static("/", "assets")

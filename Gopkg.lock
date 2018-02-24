@@ -2,15 +2,6 @@
 
 
 [[projects]]
-  branch = "master"
-  name = "github.com/BooookStore/learningGoServer"
-  packages = [
-    "controller",
-    "model"
-  ]
-  revision = "bad3a41c66b8925b2c53f72017798c4f62e3dc6c"
-
-[[projects]]
   name = "github.com/davecgh/go-spew"
   packages = ["spew"]
   revision = "346938d642f2ec3594ed81d874461961cd0faa76"
@@ -85,6 +76,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "13de97efd78beb2b59ea340c331bcf7b220668468d8ed771a886b60f5888aae7"
+  inputs-digest = "7effaa537010cc3449c195ae4c09086dbd49827e70466e141d48311b930459ad"
   solver-name = "gps-cdcl"
   solver-version = 1

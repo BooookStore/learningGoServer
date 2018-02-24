@@ -16,25 +16,41 @@ type (
 	UserList []User
 )
 
+// Update is update exist user data. Update target user found by user id.
+func (u *UserList) Update(id int, newUser *User) error {
+	updateIndex, isFound := u.searchById(id)
+	if !isFound {
+		return errors.New("Not found user id " + strconv.Itoa(id))
+	}
+
+	// delete old data and insert new data
+	head := append((*u)[:updateIndex], *newUser)
+	*u = append(head, (*u)[updateIndex+1:]...)
+	return nil
+}
+
 // DeleteById delete user by user id.
 func (u *UserList) DeleteById(id int) error {
-	var (
-		dti     = 0
-		isFound = false
-	)
+	deleteIndex, isFound := u.searchById(id)
+	if !isFound {
+		return errors.New("Not found user id " + strconv.Itoa(id))
+	}
+
+	*u = append((*u)[:deleteIndex], (*u)[deleteIndex+1:]...)
+	return nil
+}
+
+// SearchById is search user by user id.
+// If user not found, return index -1 and found false.
+func (u *UserList) searchById(id int) (index int, found bool) {
+	index = 0
 
 	for _, user := range *u {
 		if user.ID == id {
-			isFound = true
-			break
+			return index, true
 		}
-		dti++
+		index++
 	}
 
-	if !isFound {
-		return errors.New("Not found user id " + strconv.Itoa(id))
-	} else {
-		*u = append((*u)[:dti], (*u)[dti+1:]...)
-		return nil
-	}
+	return -1, false
 }
