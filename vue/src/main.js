@@ -8,8 +8,11 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import locale from 'element-ui/lib/locale/lang/ja'
 
+import Axios from 'axios'
+
 Vue.config.productionTip = false
 Vue.use(ElementUI, { locale })
+Vue.use(Axios)
 
 /* eslint-disable no-new */
 new Vue({
