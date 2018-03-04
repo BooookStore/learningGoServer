@@ -2,30 +2,34 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
 
-    <el-table
-      :data="userData"
-      style="width: 100%">
-      <el-table-column
-        prop="ID"
-        label="ID"
-        width="50">
-      </el-table-column>
-      <el-table-column
-        prop="Name"
-        label="Name"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="Age"
-        label="Age"
-        width="180">
-      </el-table-column>
-    </el-table>
+    <h2>User List</h2>
+    <el-row>
+      <el-col :span="24">
+        <el-table
+          :data="userData">
+          <el-table-column
+            prop="ID"
+            label="ID">
+          </el-table-column>
+          <el-table-column
+            prop="Name"
+            label="Name">
+          </el-table-column>
+          <el-table-column
+            prop="Age"
+            label="Age">
+          </el-table-column>
+        </el-table>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
+import ElRow from 'element-ui/packages/row/src/row'
+
 export default {
+  components: {ElRow},
   name: 'User',
   data () {
     return {
