@@ -54,13 +54,11 @@ func (h *Handler) CreateUser(c echo.Context) error {
 // DeleteUser delete user.
 func (h *Handler) DeleteUser(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
-
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, ErrorJSON{Message: "Bad Request user id " + c.Param("id")})
 	}
 
 	err = h.UserData.DeleteById(id)
-
 	if err != nil {
 		return c.JSON(http.StatusNotFound, ErrorJSON{Message: "Not found user by id " + c.Param("id")})
 	}
